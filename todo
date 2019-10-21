@@ -1,1 +1,4 @@
-globbing
+-add proper globbing
+-make it restful using the gorilla schema stuff
+-add a select * statement to show all blog entries
+-put database stuff into controllers

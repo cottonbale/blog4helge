@@ -50,6 +50,14 @@ func main() {
 	fmt.Println("Successfully connected!")
 	db.Close()
 
+	/* MOVE THIS SOMEWHERE SENSIBLE - LIKE INTO CONTROLLERS FOLDER!!
+	stmtOut, err := db.Prepare("select * from blog_elements")
+	if err != nil {
+		panic(err.Error()) // proper error handling instead of panic in your app
+	}
+	defer stmtOut.Close()
+	*/
+
 	homeView = views.NewView("bootstrap",
 		"views/home.gohtml")
 	aboutView = views.NewView("bootstrap",
