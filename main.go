@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"fmt"
+	"log"
 	"net/http"
 
 	"helgeBlog/views"
@@ -48,15 +49,30 @@ func main() {
 		panic(err)
 	}
 	fmt.Println("Successfully connected!")
-	db.Close()
 
-	/* MOVE THIS SOMEWHERE SENSIBLE - LIKE INTO CONTROLLERS FOLDER!!
-	stmtOut, err := db.Prepare("select * from blog_elements")
+	var (
+		id           int
+		blog_element string
+	)
+
+	rows, err := db.Query("select id, blog_element from blog_elements where id = ?", 1)
 	if err != nil {
-		panic(err.Error()) // proper error handling instead of panic in your app
+		log.Fatal(err)
 	}
-	defer stmtOut.Close()
-	*/
+	defer rows.Close()
+	for rows.Next() {
+		err := rows.Scan(&id, &blog_element)
+		if err != nil {
+			log.Fatal(err)
+		}
+		log.Println(id, blog_element)
+	}
+	err = rows.Err()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	db.Close()
 
 	homeView = views.NewView("bootstrap",
 		"views/home.gohtml")
