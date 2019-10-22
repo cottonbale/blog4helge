@@ -55,7 +55,9 @@ func main() {
 		blog_element string
 	)
 
-	rows, err := db.Query("select id, blog_element from blog_elements where id = ?", 1)
+	id = 1
+
+	rows, err := db.Query("select id, blog_element from blog_elements where id = ?", id)
 	if err != nil {
 		log.Fatal(err)
 	}
